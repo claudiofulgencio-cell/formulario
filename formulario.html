@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formulário de Inscrição - Curso</title>
+<style>
+  :root{
+    --bg:#ffffff; --card:#ffffff; --text:#1a1a1a; --muted:#4a4a4a;
+    --border:#8a8f98; --accent:#0b5fa3; --accent-dark:#08406e;
+    --error:#8a1f11; --focus:#0b5fa3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15181c; --card:#1f242b; --text:#f0f0f0; --muted:#c2c7cf;
+      --border:#7d838d; --accent:#5aa9e6; --accent-dark:#8cc3f0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15181c; --card:#1f242b; --text:#f0f0f0; --muted:#c2c7cf;
+    --border:#7d838d; --accent:#5aa9e6; --accent-dark:#8cc3f0;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family: "Segoe UI", Arial, sans-serif; line-height:1.5;
+    padding: calc(1.5rem + env(safe-area-inset-top,0px)) 1rem calc(2rem + env(safe-area-inset-bottom,0px));
+  }
+  main{max-width:700px; margin:0 auto;}
+  h1{font-size:1.5rem; color:var(--text);}
+  .intro{color:var(--muted); margin-bottom:1.5rem;}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:3px; padding:1.25rem 1.25rem 1.5rem; margin-bottom:1.25rem;}
+  fieldset{border:1px solid var(--border); border-radius:3px; padding:1rem; margin:0 0 1.25rem; min-width:0;}
+  legend{font-weight:700; padding:0 .5rem; font-size:1.05rem;}
+  .campo{margin-bottom:1rem;}
+  .campo:last-child{margin-bottom:0;}
+  label{display:block; font-weight:600; margin-bottom:.3rem;}
+  .req::after{content:" (obrigatório)"; font-weight:400; font-size:.85em; color:var(--muted);}
+  input[type=text], input[type=email], input[type=tel], input[type=date], textarea, select{
+    width:100%; padding:.6rem .7rem; border:1px solid var(--border); border-radius:2px;
+    font-size:1rem; background:var(--card); color:var(--text);
+  }
+  input:focus, select:focus, textarea:focus, button:focus{
+    outline:3px solid var(--focus); outline-offset:2px;
+  }
+  .radio-group label, .checkbox-group label{
+    display:flex; align-items:center; gap:.5rem; font-weight:400; margin-bottom:.5rem; cursor:pointer;
+  }
+  .radio-group input, .checkbox-group input{width:1.15rem; height:1.15rem; flex-shrink:0;}
+  textarea{resize:vertical; min-height:100px;}
+  .ajuda{font-size:.85rem; color:var(--muted); margin-top:.25rem;}
+  .legenda-obrigatorio{font-size:.9rem; color:var(--muted); margin-bottom:1.25rem;}
+  .botoes{display:flex; gap:.75rem; flex-wrap:wrap;}
+  button{
+    font-size:1rem; padding:.7rem 1.4rem; border-radius:2px; border:2px solid transparent; cursor:pointer;
+  }
+  button[type=submit]{background:var(--accent); color:#fff; border-color:var(--accent-dark);}
+  button[type=submit]:hover{background:var(--accent-dark);}
+  button[type=reset]{background:transparent; color:var(--text); border-color:var(--border);}
+  button[type=reset]:hover{background:rgba(128,128,128,.15);}
+  #status{margin-top:1rem; padding:.75rem; border-radius:2px; border:1px solid var(--border); display:none;}
+  #status.show{display:block;}
+  .barra-acessibilidade{display:flex; justify-content:flex-end; margin-bottom:.75rem;}
+  #btn-libras{
+    display:flex; align-items:center; gap:.4rem; background:#fff; color:var(--accent-dark);
+    border:1px solid var(--border); border-radius:2px; padding:.45rem .8rem; font-size:.9rem; cursor:pointer;
+  }
+  #btn-libras:hover{background:#f0f0f0;}
+  #btn-libras[aria-pressed="true"]{background:var(--accent); color:#fff; border-color:var(--accent-dark);}
+  #painel-libras{
+    display:none; border:1px solid var(--border); border-radius:2px; background:#fff;
+    padding:.9rem 1rem; margin-bottom:1.25rem; font-size:.95rem; color:var(--text);
+  }
+  #painel-libras.show{display:block;}
+</style>
+</head>
+<body>
+  <div vw class="enabled"> <div vw-access-button class="active"></div> <div vw-plugin-wrapper> <div class="vw-plugin-top-wrapper"></div> </div> </div>
+<main>
+  <div class="barra-acessibilidade">
+    <button type="button" id="btn-libras" aria-pressed="false" aria-controls="painel-libras">
+      <span aria-hidden="true">🤟</span> Libras
+    </button>
+  </div>
+  <div id="painel-libras" role="region" aria-label="Informações sobre atendimento em Libras">
+    <p><strong>Atendimento em Libras:</strong> se você é usuário da Língua Brasileira de Sinais, marque a opção "Intérprete de Libras" na seção de recursos de acessibilidade deste formulário. A escola entrará em contato para organizar o atendimento com intérprete antes do início das aulas.</p>
+  </div>
+
+  <h1>Formulário de Inscrição – Curso</h1>
+  <p class="intro">Preencha os dados abaixo para se inscrever. Campos marcados como "(obrigatório)" precisam ser preenchidos.</p>
+
+  <form id="form-inscricao" novalidate>
+    <p class="legenda-obrigatorio">Os campos indicados com o texto "(obrigatório)" são de preenchimento obrigatório.</p>
+
+    <div class="card">
+      <fieldset>
+        <legend>1. Dados pessoais</legend>
+
+        <div class="campo">
+          <label for="nome" class="req">Nome completo</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" required aria-required="true">
+        </div>
+
+        <div class="campo">
+          <label for="email" class="req">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" aria-describedby="email-ajuda">
+          <p id="email-ajuda" class="ajuda">Exemplo: nome@exemplo.com</p>
+        </div>
+
+        <div class="campo">
+          <label for="telefone" class="req">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" autocomplete="tel" required aria-required="true" aria-describedby="telefone-ajuda" placeholder="(00) 00000-0000">
+          <p id="telefone-ajuda" class="ajuda">Inclua o DDD.</p>
+        </div>
+
+        <div class="campo">
+          <label for="nascimento" class="req">Data de nascimento</label>
+          <input type="date" id="nascimento" name="nascimento" autocomplete="bday" required aria-required="true">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Curso</legend>
+        <div class="campo">
+          <label for="curso" class="req">Selecione o curso desejado</label>
+          <select id="curso" name="curso" required aria-required="true">
+            <option value="">-- Selecione uma opção --</option>
+            <option value="desenvolvimento_sistemas">Desenvolvimento de Sistemas</option>
+            <option value="administracao">Administração</option>
+            <option value="informatica">Informática</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Turno <span class="req"></span></legend>
+        <div class="radio-group" role="radiogroup" aria-required="true">
+          <label><input type="radio" name="turno" value="manha" required> Manhã</label>
+          <label><input type="radio" name="turno" value="tarde"> Tarde</label>
+          <label><input type="radio" name="turno" value="noite"> Noite</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Recursos de acessibilidade</legend>
+        <p class="ajuda">Marque as opções que se aplicam ao seu caso (não obrigatório).</p>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="acessibilidade" value="fonte_ampliada"> Material em fonte ampliada</label>
+          <label><input type="checkbox" name="acessibilidade" value="atendimento_especializado"> Atendimento especializado</label>
+          <label><input type="checkbox" name="acessibilidade" value="interprete_libras"> Intérprete de Libras</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>5. Observações</legend>
+        <div class="campo">
+          <label for="observacoes">Outras informações que deseja informar</label>
+          <textarea id="observacoes" name="observacoes" aria-describedby="obs-ajuda"></textarea>
+          <p id="obs-ajuda" class="ajuda">Campo opcional. Use para complementar sua inscrição, se necessário.</p>
+        </div>
+      </fieldset>
+
+      <div class="botoes">
+        <button type="submit">Enviar</button>
+        <button type="reset">Limpar</button>
+      </div>
+
+      <div id="status" role="status" aria-live="polite"></div>
+    </div>
+  </form>
+</main>
+
+<script>
+  const btnLibras = document.getElementById('btn-libras');
+  const painelLibras = document.getElementById('painel-libras');
+  btnLibras.addEventListener('click', function(){
+    const aberto = painelLibras.classList.toggle('show');
+    btnLibras.setAttribute('aria-pressed', aberto ? 'true' : 'false');
+  });
+
+  const form = document.getElementById('form-inscricao');
+  const status = document.getElementById('status');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){
+      form.reportValidity();
+      status.textContent = 'Há campos obrigatórios não preenchidos corretamente. Por favor, revise o formulário.';
+      status.classList.add('show');
+      return;
+    }
+    status.textContent = 'Inscrição enviada com sucesso! Obrigado por se inscrever.';
+    status.classList.add('show');
+  });
+
+  form.addEventListener('reset', function(){
+    status.classList.remove('show');
+    status.textContent = '';
+  });
+</script> 
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script> <script> new window.VLibras.Widget('https://vlibras.gov.br/app'); </script>
+</body>
+</html>
